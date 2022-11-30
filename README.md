@@ -18,7 +18,7 @@ El software ha de respectar els principals patrons de  disseny.
 NOTES 
 
 Has de tindre en compte els  següents detalls de  construcció: 
-
+- URL's:
   - POST: /players: crea un jugador/a. 
   - PUT /players: modifica el nom del jugador/a.
   - POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.  
