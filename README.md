@@ -35,3 +35,9 @@ Persistència: utilitza com a base de dades MySQL.
 Canvia tot el que necessitis i utilitza MongoDB per persistir les dades.
 - Fase 3
 Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL's del microservei. 
+
+## Util links
+
+- *JWT web:* https://jwt.io/
+- *Spring Boot Authorization Tutorial: Secure an API (Java):* https://auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/
+- *Spring Boot Initial Demo Project:* https://github.com/IT-Academy-BCN/springBootInitialDemo
