@@ -1,11 +1,13 @@
 package S05T02N01.DiceGame.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name="rolls")
+@Data
 public class Roll {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +20,9 @@ public class Roll {
 	private int d2;
 	
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "player_id", nullable = false)
-    private Player player;
+    @JoinColumn(name = "game_id", nullable = false)
+    @JsonIgnore
+    private Game game;
 	
 	public void rollDices() {
 		d1 = (int) (Math.random())*5+1;

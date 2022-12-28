@@ -38,7 +38,9 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 
 ## Util links
 
-- *JWT web:* https://jwt.io/
-- *Spring Boot Authorization Tutorial: Secure an API (Java):* https://auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/
-- *Spring Boot Initial Demo Project:* https://github.com/IT-Academy-BCN/springBootInitialDemo
-- *Spring Data JPA One To Many Relationship Mapping Example:* https://attacomsian.com/blog/spring-data-jpa-one-to-many-mapping
+- **JWT web** https://jwt.io/
+- **Spring Boot Authorization Tutorial: Secure an API (Java)** https://auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/
+- **Spring Boot Initial Demo Project** https://github.com/IT-Academy-BCN/springBootInitialDemo
+- **Spring Data JPA One To Many Relationship Mapping Example** https://attacomsian.com/blog/spring-data-jpa-one-to-many-mapping
+- **Many-To-Many Relationship in JPA** https://www.baeldung.com/jpa-many-to-many
+- **Roll The Dice | Javascript Dice Roll | HTML, CSS & Javascript Tutorial** https://www.youtube.com/watch?v=6CMfZkLntX8
