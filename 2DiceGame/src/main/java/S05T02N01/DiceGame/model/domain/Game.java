@@ -1,6 +1,5 @@
 package S05T02N01.DiceGame.model.domain;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

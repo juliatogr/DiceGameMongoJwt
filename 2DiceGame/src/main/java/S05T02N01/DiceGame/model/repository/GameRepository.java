@@ -1,6 +1,5 @@
 package S05T02N01.DiceGame.model.repository;
 
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
