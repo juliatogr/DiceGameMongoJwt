@@ -44,3 +44,4 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 - **Spring Data JPA One To Many Relationship Mapping Example** https://attacomsian.com/blog/spring-data-jpa-one-to-many-mapping
 - **Many-To-Many Relationship in JPA** https://www.baeldung.com/jpa-many-to-many
 - **Roll The Dice | Javascript Dice Roll | HTML, CSS & Javascript Tutorial** https://www.youtube.com/watch?v=6CMfZkLntX8
+- **Spring Boot Many to Many Tutorial with Thymeleaf, Bootstrap and MySQL** https://www.youtube.com/watch?v=AbGxZmfWulU

@@ -11,13 +11,16 @@
 	</div>
 	<div class="container">
 
-		<a class="btn btn-primary btn-sm" th:href="@{/player/add}"
+		<a class="btn btn-primary btn-sm" th:href="@{/players/add}"
 			th:text="'New Player'" title="New Player">
 		</a>
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">Avg Success</th>
+					<th scope="col">Play</th>
 					<th scope="col">Edit</th>
 					<th scope="col">Delete</th>
 				</tr>
@@ -25,8 +28,11 @@
 			<tbody>
 				<tr th:each="p:${players}">
 					<th scope="row" th:text="${p.playerId}"></th>
-					<td><a th:href="@{/player/update/{id}  (id = ${p.playerId})}" class="btn btn-warning">Edit</a></td>
-					<td><a th:href="@{/player/delete/{id}  (id = ${p.playerId})}" class="btn btn-danger">Delete</a></td>
+					<th scope="row" th:text="${p.name}"></th>
+					<th scope="row" th:text="${p.avgSuccessPerc}"></th>
+					<td><a th:href="@{/players/{id}/games  (id = ${p.playerId})}" class="btn btn-warning">Play</a></td>
+					<td><a th:href="@{/players/update/{id}  (id = ${p.playerId})}" class="btn btn-warning">Edit</a></td>
+					<td><a th:href="@{/players/delete/{id}  (id = ${p.playerId})}" class="btn btn-danger">Delete</a></td>
 				</tr>
 				
 			</tbody>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/template :: head">
+<meta charset="UTF-8">
+<title>Update player</title>
+</head>
+<body>
+	
+	<header th:replace="template/template :: header"></header>
+	<div class="container">
+		<h1 th:text="${titol}"></h1>
+	</div>
+	<div class="container">
+
+		<a class="btn btn-primary btn-sm"  th:object="${player}" th:href="@{/players/{playerId}"
+			th:text="'New Game'" title="New Game">
+		</a>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Roll</th>
+					<th scope="col">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="g:${games}">
+					<th scope="row" th:text="${g.gameId}"></th>
+					<td><a th:href="@{/player/play/{id}/roll  (id = ${p.playerId})}" class="btn btn-warning">Roll</a></td>
+					<td><a th:href="@{/player/delete/{id}  (id = ${p.playerId})}" class="btn btn-danger">Delete</a></td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="template/template :: footer"></footer>
+</body>
+</html>

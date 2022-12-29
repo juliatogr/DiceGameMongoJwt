@@ -1,8 +1,9 @@
 package S05T02N01.DiceGame.model.domain;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,14 +17,17 @@ public class Player {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "player_id", unique = true, nullable = false)
-	private int player_id;
+	private int playerId;
 	
 	@Column(name = "name", unique = true, nullable = true)
 	private String name;
 
+    @Column(name="avg_success_perc")
+	private double avgSuccessPerc = 0.0;
+    
 	@OneToMany(mappedBy = "player")
 	@JsonIgnore
-	private ArrayList<Game> games = new ArrayList<>();
+	private Set<Game> games;
 		
 
 }
