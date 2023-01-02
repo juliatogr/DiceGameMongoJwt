@@ -34,13 +34,8 @@ public class RollController {
 		lastRoll.rollDices();
 		lastRoll.setGame(game);
 		rollService.saveOne(lastRoll);
-
-		String ret = "/game/play";
-		if (lastRoll.isWin()) {
-			 ret = "redirect:/players/"+pk_PlayerID+"/games/"+pk_gameID+"/rolls";
-		}
 		
-		return ret;
+		return "redirect:/players/"+pk_PlayerID+"/games/"+pk_gameID+"/rolls";
 	}
 	
 	@GetMapping("/players/{playerId}/games/{gameId}/rolls")
@@ -51,6 +46,9 @@ public class RollController {
 		
 		model.addAttribute("rolls", rolls);
 		
+		if (!rolls.isEmpty() && rolls.get(rolls.size()-1).isWin()) {
+			return "/game/won_rolls_list";
+		}
 		return "/game/rolls_list";
 	}
 	

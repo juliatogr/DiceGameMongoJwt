@@ -1,6 +1,7 @@
 package S05T02N01.DiceGame.model.domain;
 
 import java.util.Objects;
+import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,8 +30,9 @@ public class Roll {
     private Game game;
 	
 	public void rollDices() {
-		d1 = (int) (Math.random())*5+1;
-		d2 = (int) (Math.random())*5+1;
+		Random random = new Random();
+		d1 = (int) (random.nextInt(6)+1);
+		d2 = (int) (random.nextInt(6)+1);
 	}
 	
 	public boolean isWin() {

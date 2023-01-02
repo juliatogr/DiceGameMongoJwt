@@ -51,7 +51,7 @@ public class GameController {
 		gameService.saveOne(game);
 		model.addAttribute("gameId", game.getGameId());
 
-		return "/game/play";
+		return "/game/rolls_list";
 	}
 	
 

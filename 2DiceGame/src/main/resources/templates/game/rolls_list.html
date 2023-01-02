@@ -11,7 +11,11 @@
 		<h1 th:text="${titol}"></h1>
 	</div>
 	<div class="container">
-
+		<form th:action="@{|/players/${playerId}/games/${gameId}/roll|}" th:object=${roll} method="post" >
+				<div class="card-footer bg-dark">
+					<button type="submit" class="btn btn-success" >Roll</button>
+				</div>
+		</form>
 		<table class="table">
 			<thead>
 				<tr>
