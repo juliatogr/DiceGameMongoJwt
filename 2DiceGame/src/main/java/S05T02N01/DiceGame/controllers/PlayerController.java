@@ -31,14 +31,16 @@ public class PlayerController {
 		Player player = new Player();
 		model.addAttribute("titol", "New Player");
 		model.addAttribute("player", player);
-		return "/player/create";
+		return "/player/create_player";
 	}
 	
 	@PostMapping("/players/save")
 	public String save(Player player) {
 		System.out.println(player);
+		if (player.getName()=="") {
+			player.setName("ANONIMOUS");
+		}
 		playerService.saveOne(player);
-		System.out.println(player);
 		return "redirect:/players";
 	}
 	
@@ -46,7 +48,6 @@ public class PlayerController {
 	public String edit(@PathVariable("playerId") int playerId, Model model) {
 		Player player = playerService.findByID(playerId);
 		model.addAttribute("player", player);
-		System.out.println(player);
 		return "/player/edit";
 	}
 	

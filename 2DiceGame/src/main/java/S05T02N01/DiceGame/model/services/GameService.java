@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import S05T02N01.DiceGame.model.domain.Game;
+import S05T02N01.DiceGame.model.dto.RollDTO;
 import S05T02N01.DiceGame.model.repository.GameRepository;
 
 
@@ -23,6 +24,13 @@ public class GameService implements IGameService {
 	public List<Game> listAll() {
 		
 		return gameRepository.findAll().stream().collect(Collectors.toList());
+	}
+	
+	@Override
+	@ModelAttribute("playerGames")
+	public List<Game> listAllPlayer(Integer playerId) {
+		
+		return gameRepository.findAllByPlayerPlayerId(playerId);
 	}
 
 	@Override

@@ -11,25 +11,25 @@
 		<h1 th:text="${titol}"></h1>
 	</div>
 	<div class="container">
-
-		<a class="btn btn-primary btn-sm" th:href="@{|/players/${playerId}/games/add|}"
-			th:text="'New Game'" title="New Game">
-		</a>
+		
+		<form th:action="@{|/players/${playerId}/games/save|}" th:object=${game} method="post" >
+				<div class="card-footer bg-dark">
+					<button type="submit" class="btn btn-success" >New Game</button>
+				</div>
+		</form>
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Success</th>
-					<th scope="col">PlayerId</th>
 					<th scope="col">Rolls</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="g:${games}">
+				<tr th:each="g:${playerGames}">
 					<th scope="row" th:text="${g.gameId}"></th>
 					<th scope="row" th:text="${g.successPerc}"></th>
-					<th scope="row" th:text="${g.player.name}"></th>
-					<td><a th:href="@{|/players/${g.player.playerId}/games/${g.gameId}/rolls|}" class="btn btn-warning">Rolls</a></td>
+					<td><a th:href="@{|/players/${playerId}/games/${g.gameId}/rolls|}" class="btn btn-warning">Rolls</a></td>
 				</tr>
 				
 			</tbody>

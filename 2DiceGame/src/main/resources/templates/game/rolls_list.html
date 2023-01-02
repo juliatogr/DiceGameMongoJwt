@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="template/template :: head">
 <meta charset="UTF-8">
-<title>Update player</title>
+<title>Create Game</title>
 </head>
 <body>
 	
@@ -12,12 +12,6 @@
 	</div>
 	<div class="container">
 
-		<form th:action="@{|/players/${playerId}/games/${gameId}/roll|}" th:object=${roll} method="post" >
-				<input type="hidden" th:field="*{gameId}" th:value="${gameId}"> 
-				<div class="card-footer bg-dark">
-					<button type="submit" class="btn btn-success" >Roll</button>
-				</div>
-		</form>
 		<table class="table">
 			<thead>
 				<tr>
@@ -35,7 +29,6 @@
 				
 			</tbody>
 		</table>
-
 	</div>
 	<footer th:replace="template/template :: footer"></footer>
 </body>
