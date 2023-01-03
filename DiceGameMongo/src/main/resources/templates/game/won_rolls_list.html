@@ -11,14 +11,7 @@
 		<h1 th:text="${titol}"></h1>
 	</div>
 	<div class="container">
-		<form th:action="@{|/players/${playerId}/games/${gameId}/roll|}" th:object=${roll} method="post" >
-				<div class="card-footer bg-dark">
-					<button type="submit" class="btn btn-success" >Roll</button>
-				</div>
-		</form>
-		<a class="btn btn-primary btn-sm" th:href="@{|/players/${playerId}/games/${gameId}/deleterolls|}"
-			th:text="'Delete rolls'" title="Delete rolls">
-		</a>
+
 		<table class="table">
 			<thead>
 				<tr>

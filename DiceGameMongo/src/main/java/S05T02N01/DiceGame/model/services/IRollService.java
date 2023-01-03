@@ -9,7 +9,6 @@ import S05T02N01.DiceGame.model.dto.RollDTO;
 public interface IRollService {
 	public List<RollDTO> listAll();
 	public List<RollDTO> listAllGame(Integer gameId);
-	public void deleteAllGame(Integer gameId);
 	public void saveOne(Roll roll);
 	public Roll findByID(int id);
 }

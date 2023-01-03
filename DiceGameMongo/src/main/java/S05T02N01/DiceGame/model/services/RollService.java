@@ -35,17 +35,12 @@ public class RollService implements IRollService {
 
 	@Override
 	public void saveOne(Roll roll) {
-		rollRepository.save(roll);
-	}
-	
-	@Override
-	public void deleteAllGame(Integer gameId) {
-		this.listAll().stream().forEach(r->rollRepository.deleteById(r.getRollId()));
+		rollRepository.save((Iterable<Roll>) roll);
 	}
 
 	@Override
 	public Roll findByID(int id) {
-		return rollRepository.findById(id).orElse(null);
+		return rollRepository.findById(id);
 	}
 
 	public RollDTO convertToDTO(Roll roll) {

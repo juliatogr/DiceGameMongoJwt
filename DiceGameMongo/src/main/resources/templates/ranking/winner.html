@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/template :: head">
+<meta charset="ISO-8859-1">
+</head>
+<body>
+	<header th:replace="template/template :: header"></header>
+	<div class="container">
+		<h1>The winner is </h1>
+	</div>
+	<div class="container">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">Avg Success</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row" th:text="${winner.playerId}"></th>
+					<th scope="row" th:text="${winner.name}"></th>
+					<th scope="row" th:text="${winner.avgSuccessPerc}"></th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="template/template :: footer"></footer>
+</body>
+</html>

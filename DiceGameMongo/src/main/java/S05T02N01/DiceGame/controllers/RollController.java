@@ -76,14 +76,5 @@ public class RollController {
 		return "/game/rolls_list";
 	}
 	
-	@GetMapping("/players/{playerId}/games/{gameId}/deleterolls")
-	public String deleteRolls(@PathVariable("playerId") int pk_PlayerID,
-			@PathVariable("gameId") int pk_gameID) {
-		
-		rollService.deleteAllGame(pk_gameID);
-
-		return "/game/rolls_list";
-	}
-	
 
 }
