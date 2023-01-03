@@ -14,6 +14,7 @@ import S05T02N01.DiceGame.model.dto.RollDTO;
 @Repository
 public interface RollRepository extends MongoRepository<Roll, Integer> {
 	public List<Roll> findAllByGameGameId(Integer gameId);
-
+	public void deleteAllByGameGameId(int gameId);
 	public Roll findById(int id);
+	public void deleteById(int rollId);
 }
