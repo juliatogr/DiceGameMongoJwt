@@ -38,9 +38,15 @@ public class PlayerController {
 	public String save(Player player) {
 		System.out.println(player);
 		if (player.getName()=="") {
+			System.out.println("is anonimous");
 			player.setName("ANONIMOUS");
+			System.out.println(player);
+		} 
+		if (player.getName().equalsIgnoreCase("Anonimous") 
+				|| playerService.findByName(player.getName()) == null) {
+			playerService.saveOne(player);
 		}
-		playerService.saveOne(player);
+		
 		return "redirect:/players";
 	}
 	

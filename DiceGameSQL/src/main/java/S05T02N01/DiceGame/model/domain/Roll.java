@@ -1,13 +1,11 @@
 package S05T02N01.DiceGame.model.domain;
 
-import java.util.Objects;
 import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
 
 @Entity
 @Table(name="rolls")
@@ -36,11 +34,7 @@ public class Roll {
 	}
 	
 	public boolean isWin() {
-		boolean isWin = false;
-		if (d1 + d2 == 7) {
-			isWin = true;
-		}
-		return isWin;
+		return d1 + d2 == 7;
 	}
 
 	@Override

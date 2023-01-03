@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
 
 @Entity
 @Table(name = "games")
@@ -33,17 +32,6 @@ public class Game {
     @Column(name="success_perc")
 	private double successPerc = 0.0;
     
-	public void clearRolls() {
-		rolls.clear();
-	}
-	
-	public void computeSuccessPerc() {
-		successPerc = 0;
-		
-		rolls.stream().forEach(r -> successPerc +=  r.isWin()? 1:0);
-		successPerc /= rolls.size();
-	}
-
 	@Override
 	public String toString() {
 		return "Game [gameId=" + gameId + ", player=" + player + ", successPerc=" + successPerc

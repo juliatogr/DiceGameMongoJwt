@@ -11,12 +11,6 @@ public class RollDTO {
 	private int result;
     private Game game;
 	
-	public void rollDices() {
-		d1 = (int) (Math.random())*5+1;
-		d2 = (int) (Math.random())*5+1;
-		result = d1+d2;
-	}
-	
 	public boolean isWin() {
 		return result == 7;
 	}

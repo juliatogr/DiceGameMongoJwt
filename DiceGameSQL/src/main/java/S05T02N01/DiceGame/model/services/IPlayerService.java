@@ -8,5 +8,6 @@ public interface IPlayerService {
 	public List<Player> listAll();
 	public void saveOne(Player player);
 	public Player findByID(int id);
+	public Player findByName(String name);
 	public void deleteOne(int id);
 }
