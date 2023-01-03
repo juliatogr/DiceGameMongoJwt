@@ -2,32 +2,19 @@ package S05T02N01.DiceGame.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import S05T02N01.DiceGame.model.domain.Game;
-import S05T02N01.DiceGame.model.domain.Player;
-import S05T02N01.DiceGame.model.domain.Roll;
-import S05T02N01.DiceGame.model.dto.RollDTO;
-import S05T02N01.DiceGame.model.services.IGameService;
-import S05T02N01.DiceGame.model.services.IPlayerService;
-import S05T02N01.DiceGame.model.services.IRollService;
-
 import org.springframework.ui.Model;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
+import S05T02N01.DiceGame.model.domain.Player;
+import S05T02N01.DiceGame.model.services.IPlayerService;
+
+import java.util.List;
 
 @Controller
 public class RankingController {
 	
 	@Autowired
 	private IPlayerService playerService;
-	
-	@Autowired
-	private IGameService gameService;
 	
 	
 	@GetMapping("/ranking")

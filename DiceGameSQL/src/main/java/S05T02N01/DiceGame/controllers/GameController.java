@@ -1,7 +1,5 @@
 package S05T02N01.DiceGame.controllers;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import S05T02N01.DiceGame.model.domain.Game;
 import S05T02N01.DiceGame.model.domain.Player;
-import S05T02N01.DiceGame.model.domain.Roll;
 import S05T02N01.DiceGame.model.services.IGameService;
 import S05T02N01.DiceGame.model.services.IPlayerService;
 

@@ -1,6 +1,5 @@
 package S05T02N01.DiceGame.model.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import S05T02N01.DiceGame.model.domain.Game;
-import S05T02N01.DiceGame.model.domain.Roll;
-import S05T02N01.DiceGame.model.dto.RollDTO;
 import S05T02N01.DiceGame.model.repository.GameRepository;
 
 
