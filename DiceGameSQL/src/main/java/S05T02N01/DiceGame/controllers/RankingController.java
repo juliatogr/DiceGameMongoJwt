@@ -32,18 +32,18 @@ public class RankingController {
 	
 	@GetMapping("/ranking")
 	public String getRanking(Model model) {
-		double avg_success_perc = 0;
+		double avgSuccessPerc = 0;
 		List<Player> players = playerService.listAll();
 		for (Player p : players ) {
-			avg_success_perc += p.getAvgSuccessPerc();
+			avgSuccessPerc += p.getAvgSuccessPerc();
 		}
 		if (players.size() > 0) {
-			avg_success_perc /= players.size();
+			avgSuccessPerc /= players.size();
 		}
 		
-		avg_success_perc = Math.floor(avg_success_perc * 100)/100;
+		avgSuccessPerc = Math.floor(avgSuccessPerc * 100)/100;
 		model.addAttribute("players", players);
-		model.addAttribute("avg_success_perc", avg_success_perc);
+		model.addAttribute("totalAvgSuccessPerc", avgSuccessPerc);
 		return "/ranking/avg_success_perc";
 	}
 	
