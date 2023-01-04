@@ -52,10 +52,12 @@ public class RollController {
 		
 		double newGameSuccess = (currentGameSuccess * numRolls + (lastRoll.isWin()?1:0))/(numRolls+1);
 		game.setSuccessPerc(Math.floor(newGameSuccess* 100)/100);
+		gameService.saveOne(game);
 		
 		double newPlayerSuccess = (currentPlayerSuccess * (numGames-1) + newGameSuccess)/numGames;
 		player.setAvgSuccessPerc(Math.floor(newPlayerSuccess* 100)/100);
 		
+		playerService.saveOne(player);
 		Roll.idIncrement++;
 		lastRoll.setRollId(Roll.idIncrement);
 		rollService.saveOne(lastRoll);
