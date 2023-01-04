@@ -52,3 +52,9 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 - **Accessing Data with MongoDB** https://spring.io/guides/gs/accessing-data-mongodb/
 - **Spring Boot Integration with MongoDB Tutorial** https://www.mongodb.com/compatibility/spring-boot
 - **Spring Data MongoDB - Reference Documentation** https://docs.spring.io/spring-data/mongodb/docs/current-SNAPSHOT/reference/html/#reference
+- **Spring Boot Authorization Tutorial: Secure an API (Java)** https://auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/
+- **Securing a Web Application** https://spring.io/guides/gs/securing-web/
+- **Spring Security without the WebSecurityConfigurerAdapter** https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
+- **Spring Boot Security + JWT Hello World Example** https://www.javainuse.com/spring/boot-jwt
+- **Autenticación de APIs basada en tokens con Spring y JWT** https://blog.softtek.com/es/autenticando-apis-con-spring-y-jwt
+- **Rest API Authentication | Spring OAuth 2.0 Resource Server, JWT, MongoDB, Spring Boot** https://www.youtube.com/watch?v=FoyAvzU5fO0
