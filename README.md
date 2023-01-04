@@ -47,3 +47,8 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 - **Spring Boot Many to Many Tutorial with Thymeleaf, Bootstrap and MySQL** https://www.youtube.com/watch?v=AbGxZmfWulU
 - **No bean named 'mongoTemplate' available. Spring Boot + MongoDB** https://stackoverflow.com/questions/63386079/no-bean-named-mongotemplate-available-spring-boot-mongodb
 - **'Field required a bean of type that could not be found.' error spring restful API using mongodb** https://stackoverflow.com/questions/42907553/field-required-a-bean-of-type-that-could-not-be-found-error-spring-restful-ap
+- **Building REST services with Spring** https://spring.io/guides/tutorials/rest/
+- **Spring Boot MongoDB** https://www.digitalocean.com/community/tutorials/spring-boot-mongodb
+- **Accessing Data with MongoDB** https://spring.io/guides/gs/accessing-data-mongodb/
+- **Spring Boot Integration with MongoDB Tutorial** https://www.mongodb.com/compatibility/spring-boot
+- **Spring Data MongoDB - Reference Documentation** https://docs.spring.io/spring-data/mongodb/docs/current-SNAPSHOT/reference/html/#reference
