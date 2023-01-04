@@ -45,3 +45,5 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 - **Many-To-Many Relationship in JPA** https://www.baeldung.com/jpa-many-to-many
 - **Roll The Dice | Javascript Dice Roll | HTML, CSS & Javascript Tutorial** https://www.youtube.com/watch?v=6CMfZkLntX8
 - **Spring Boot Many to Many Tutorial with Thymeleaf, Bootstrap and MySQL** https://www.youtube.com/watch?v=AbGxZmfWulU
+- **No bean named 'mongoTemplate' available. Spring Boot + MongoDB** https://stackoverflow.com/questions/63386079/no-bean-named-mongotemplate-available-spring-boot-mongodb
+- **'Field required a bean of type that could not be found.' error spring restful API using mongodb** https://stackoverflow.com/questions/42907553/field-required-a-bean-of-type-that-could-not-be-found-error-spring-restful-ap

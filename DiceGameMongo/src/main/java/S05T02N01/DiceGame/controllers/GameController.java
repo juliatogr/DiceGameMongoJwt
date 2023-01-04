@@ -48,6 +48,8 @@ public class GameController {
 		
 		Player p = playerService.findByID(pk_PlayerID);
 		game.setPlayer(p);
+		Game.idIncrement++;
+		game.setGameId(Game.idIncrement);
 		gameService.saveOne(game);
 		model.addAttribute("gameId", game.getGameId());
 

@@ -26,9 +26,6 @@ public class RankingController {
 	@Autowired
 	private IPlayerService playerService;
 	
-	@Autowired
-	private IGameService gameService;
-	
 	
 	@GetMapping("/ranking")
 	public String getRanking(Model model) {

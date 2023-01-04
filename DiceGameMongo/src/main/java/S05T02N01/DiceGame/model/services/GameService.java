@@ -1,16 +1,12 @@
 package S05T02N01.DiceGame.model.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import S05T02N01.DiceGame.model.domain.Game;
-import S05T02N01.DiceGame.model.domain.Roll;
-import S05T02N01.DiceGame.model.dto.RollDTO;
 import S05T02N01.DiceGame.model.repository.GameRepository;
 
 
@@ -25,7 +21,7 @@ public class GameService implements IGameService {
 	@ModelAttribute("games")
 	public List<Game> listAll() {
 		
-		return gameRepository.findAll().stream().collect(Collectors.toList());
+		return gameRepository.findAll();
 	}
 	
 	@Override
@@ -37,7 +33,7 @@ public class GameService implements IGameService {
 
 	@Override
 	public void saveOne(Game game) {
-		gameRepository.save((Iterable<Game>) game);
+		gameRepository.save(game);
 	}
 
 	@Override

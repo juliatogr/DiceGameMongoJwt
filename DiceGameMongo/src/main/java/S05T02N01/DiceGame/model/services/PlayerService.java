@@ -29,7 +29,7 @@ public class PlayerService implements IPlayerService {
 
 	@Override
 	public void saveOne(Player player) {
-		playerRepository.save((Iterable<Player>) player);
+		playerRepository.save(player);
 	}
 	
 	@Override

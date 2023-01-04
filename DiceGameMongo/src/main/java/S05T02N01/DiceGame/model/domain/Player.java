@@ -1,35 +1,24 @@
 package S05T02N01.DiceGame.model.domain;
 
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-
 @Data
+@Document(collection = "players")
 public class Player {
 
-	private int playerId;
-	
-
+    public static int idIncrement = 0;
+    
+	@Id private long playerId;
 	private String name;
-
-
 	private double avgSuccessPerc = 0.0;
 
-	private Set<Game> games = new HashSet<>();
-
-
-	
-	@Override
-	public String toString() {
-		return "Player [playerId=" + playerId + ", name=" + name + ", avgSuccessPerc=" + avgSuccessPerc + "]";
-	}
-		
+	private List<Game> games = new ArrayList<>();
 
 }

@@ -41,6 +41,8 @@ public class PlayerController {
 		} 
 		if (player.getName().equalsIgnoreCase("Anonimous") 
 				|| playerService.findByName(player.getName()) == null) {
+			Player.idIncrement++;
+			player.setPlayerId(Player.idIncrement);
 			playerService.saveOne(player);
 		}
 		

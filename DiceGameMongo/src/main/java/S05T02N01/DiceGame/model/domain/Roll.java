@@ -2,21 +2,18 @@ package S05T02N01.DiceGame.model.domain;
 
 import java.util.Random;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
 
 
 import lombok.Data;
 
 @Data
 public class Roll {
+	public static int idIncrement = 0;
 	
-	private int rollId;
-	
-
+	@Id private int rollId;
 	private int d1;
-
 	private int d2;
-	
     private Game game;
 	
 	public void rollDices() {
@@ -27,11 +24,6 @@ public class Roll {
 	
 	public boolean isWin() {
 		return d1 + d2 == 7;
-	}
-
-	@Override
-	public String toString() {
-		return "Roll [rollId=" + rollId + ", d1=" + d1 + ", d2=" + d2 + ", game=" + game + "]";
 	}
 	
 }

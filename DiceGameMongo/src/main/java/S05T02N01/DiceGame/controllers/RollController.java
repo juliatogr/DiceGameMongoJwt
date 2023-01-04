@@ -56,6 +56,8 @@ public class RollController {
 		double newPlayerSuccess = (currentPlayerSuccess * (numGames-1) + newGameSuccess)/numGames;
 		player.setAvgSuccessPerc(Math.floor(newPlayerSuccess* 100)/100);
 		
+		Roll.idIncrement++;
+		lastRoll.setRollId(Roll.idIncrement);
 		rollService.saveOne(lastRoll);
 		
 		return "redirect:/players/"+pk_PlayerID+"/games/"+pk_gameID+"/rolls";

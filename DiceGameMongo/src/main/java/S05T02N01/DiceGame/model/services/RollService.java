@@ -35,7 +35,7 @@ public class RollService implements IRollService {
 
 	@Override
 	public void saveOne(Roll roll) {
-		rollRepository.save((Iterable<Roll>) roll);
+		rollRepository.save(roll);
 	}
 	
 	@Override
