@@ -18,7 +18,7 @@ public class PlayerController {
 	@Autowired
 	private IPlayerService playerService;
 
-	@GetMapping({"/","/players"})
+	@GetMapping({"/", "/players"})
 	public String listAll(Model model) {
 		List<Player> llistatPlayers = playerService.listAll();
 		model.addAttribute("Titol", "Llista de Players");

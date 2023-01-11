@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{template/template :: head}">
+        <meta charset="UTF-8" />
+        <title>Login</title>
+
+<!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/4.1.3/cash.min.js"></script> -->
+    </head>
+    <body>
+
+
+		<header th:replace="~{template/template :: header}"></header>
+		
+			<div class="container">
+		
+				<div class="card bg-light">
+					<div class="card-header bg-dark text-white" th:text="${titol}"></div>
+					<div class="card-body"></div>
+		
+<!-- 					<form th:action="@{./login}" th:object=${LoginUser} method="post" > -->
+		
+<!-- 						<div class="form-group row"> -->
+<!-- 							<label class="col-md-2" for="id">Id</label>  -->
+<!-- 							<input type="text" th:field="*.{id}"> -->
+<!-- 							<label class="col-md-2" for="pwd">Pwd</label>  -->
+<!-- 							<input type="text" th:field="*.{pwd}">  -->
+<!-- 						</div> -->
+<!-- 						<div class="card-footer bg-dark"> -->
+<!-- 							<button type="submit" class="btn btn-success" >Submit</button> -->
+<!-- 						</div> -->
+<!-- 					</form> -->
+					
+					        <form action="./login" method="POST">
+            <input type="text" name="id" />
+            <input type="text" name="pwd" />
+            <button type="submit">Submit</button>
+        </form>
+				</div>
+			</div>
+			<footer th:replace="~{template/template :: footer}"></footer>
+    </body>
+</html>
