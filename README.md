@@ -57,3 +57,6 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 - **Spring Boot Security + JWT Hello World Example** https://www.javainuse.com/spring/boot-jwt
 - **Autenticación de APIs basada en tokens con Spring y JWT** https://blog.softtek.com/es/autenticando-apis-con-spring-y-jwt
 - **Rest API Authentication | Spring OAuth 2.0 Resource Server, JWT, MongoDB, Spring Boot** https://www.youtube.com/watch?v=FoyAvzU5fO0
+- **Spring Boot, MongoDB: JWT Authentication with Spring Security** https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/
+- **Thymeleaf + Spring Security integration basics** https://www.thymeleaf.org/doc/articles/springsecurity.html
+- **Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported for @RequestBody MultiValueMap** https://stackoverflow.com/questions/33796218/content-type-application-x-www-form-urlencodedcharset-utf-8-not-supported-for
