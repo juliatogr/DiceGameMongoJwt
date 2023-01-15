@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/template :: head">
+<meta charset="UTF-8">
+<title>Create Game</title>
+</head>
+<body>
+	
+	<header th:replace="template/template :: header"></header>
+	<div class="container">
+		<h1 th:text="${titol}"></h1>
+	</div>
+	<div class="container">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Success</th>
+					<th scope="col">PlayerId</th>
+					<th scope="col">Rolls</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="g:${games}">
+					<th scope="row" th:text="${g.gameId}"></th>
+					<th scope="row" th:text="${g.successPerc}"></th>
+					<th scope="row" th:text="${g.player.name}"></th>
+					<td><a th:href="@{|/players/${g.player.playerId}/games/${g.gameId}/rolls|}" class="btn btn-warning">Rolls</a></td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="template/template :: footer"></footer>
+</body>
+</html>
