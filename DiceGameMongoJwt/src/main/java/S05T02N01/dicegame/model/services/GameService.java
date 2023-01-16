@@ -38,7 +38,7 @@ public class GameService implements IGameService {
 	}
 
 	@Override
-	public Game findByID(int id) {
+	public Game findByID(String id) {
 		return gameRepository.findById(id);
 	}
 

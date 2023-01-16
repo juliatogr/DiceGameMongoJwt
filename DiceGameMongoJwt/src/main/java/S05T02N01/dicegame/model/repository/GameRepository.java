@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import S05T02N01.dicegame.model.domain.Game;
 
-@Repository
 public interface GameRepository extends MongoRepository<Game, Integer> {
 	public List<Game> findAllByPlayerId(String id);
-	public Game findById(int id);
+	public Game findById(String id);
 }

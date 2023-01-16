@@ -97,42 +97,39 @@ public class RollController {
 	
 	@PostMapping("/players/{id}/games/{gameId}/roll")
 	public ResponseEntity<Roll> roll(@PathVariable("id") String pk_PlayerID, 
-			@PathVariable("gameId") int gameId) {
+			@PathVariable("gameId") String gameId) {
 		
 		
 		try {
+			
 			
 			Game game = gameService.findByID(gameId);
 			Optional<User> p = playerService.findById(pk_PlayerID);
 			
 			User player = p.isPresent()? p.get() : null;
-			Roll lastRoll = new Roll(game);
 			
-			lastRoll.rollDices();
-			
+			Roll lastRoll = new Roll();
 			
 			
-			List<Game> games = gameService.listAllPlayer(pk_PlayerID);
-			List<RollDTO> rolls = rollService.listAllGame(gameId);
 			
-			int numRolls = rolls.size();
-			int numGames = games.size();
-			
-			double currentGameSuccess = game.getSuccessPerc();
-			double currentPlayerSuccess = player.getAvgSuccessPerc();
-			
-			double newGameSuccess = (currentGameSuccess * numRolls + (lastRoll.isWin()?1:0))/(numRolls+1);
-			game.setSuccessPerc(Math.floor(newGameSuccess* 100)/100);
-			gameService.saveOne(game);
-			
-			double newPlayerSuccess = (currentPlayerSuccess * (numGames-1) + newGameSuccess)/numGames;
-			player.setAvgSuccessPerc(Math.floor(newPlayerSuccess* 100)/100);
-			
-			playerService.saveOne(player);
-			Roll.idIncrement++;
-			lastRoll.setRollId(Roll.idIncrement);
+//			List<Game> games = gameService.listAllPlayer(pk_PlayerID);
+//			List<RollDTO> rolls = rollService.listAllGame(gameId);
+//			
+//			int numRolls = rolls.size();
+//			int numGames = games.size();
+//			
+//			double currentGameSuccess = game.getSuccessPerc();
+//			double currentPlayerSuccess = player.getAvgSuccessPerc();
+//			
+//			double newGameSuccess = (currentGameSuccess * numRolls + (lastRoll.isWin()?1:0))/(numRolls+1);
+//			game.setSuccessPerc(Math.floor(newGameSuccess* 100)/100);
+//			gameService.saveOne(game);
+//			
+//			double newPlayerSuccess = (currentPlayerSuccess * (numGames-1) + newGameSuccess)/numGames;
+//			player.setAvgSuccessPerc(Math.floor(newPlayerSuccess* 100)/100);
+//			
+//			playerService.saveOne(player);
 			Roll _roll = rollService.saveOne(lastRoll);
-			rollService.saveOne(lastRoll);
 			return new ResponseEntity<>(_roll, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,8 +137,8 @@ public class RollController {
 	}
 	
 	@GetMapping("/players/{id}/games/{gameId}/rolls")
-	public ResponseEntity<List<RollDTO>> listRolls(@PathVariable("id") int pk_PlayerID, 
-			@PathVariable("gameId") int pk_gameID) {
+	public ResponseEntity<List<RollDTO>> listRolls(@PathVariable("id") String pk_PlayerID, 
+			@PathVariable("gameId") String pk_gameID) {
 		try {
 			Game game = gameService.findByID(pk_gameID);
 			List<RollDTO> rolls = new ArrayList<RollDTO>();
@@ -154,8 +151,8 @@ public class RollController {
 	}
 	
 	@GetMapping("/players/{id}/games/{gameId}/deleterolls")
-	public ResponseEntity<HttpStatus> deleteRolls(@PathVariable("id") int pk_PlayerID,
-			@PathVariable("gameId") int pk_gameID) {
+	public ResponseEntity<HttpStatus> deleteRolls(@PathVariable("id") String pk_PlayerID,
+			@PathVariable("gameId") String pk_gameID) {
 
 		try {
 			rollService.deleteAllGame(pk_gameID);

@@ -73,7 +73,7 @@ public class UserController {
 //		return "redirect:/players";
 //	}
 
-	@GetMapping({"/", "/players"})
+	@GetMapping("/players")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public ResponseEntity<List<User>> listAll() {
 		
@@ -88,7 +88,7 @@ public class UserController {
 		}
 	}
 		
-	@GetMapping("/players/update")
+	@PutMapping("/players")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public ResponseEntity<User> updatePlayer(@RequestBody User player) {
 		Optional<User> p = playerService.findById(player.getId());

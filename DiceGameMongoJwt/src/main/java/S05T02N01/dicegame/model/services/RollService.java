@@ -28,9 +28,9 @@ public class RollService implements IRollService {
 	
 	@Override
 	@ModelAttribute("gameRolls")
-	public List<RollDTO> listAllGame(Integer gameId) {
+	public List<RollDTO> listAllGame(String gameId) {
 		
-		return rollRepository.findAllByGameGameId(gameId).stream().map(this::convertToDTO).collect(Collectors.toList());
+		return rollRepository.findAllByGameId(gameId).stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	@Override
@@ -39,22 +39,21 @@ public class RollService implements IRollService {
 	}
 	
 	@Override
-	public void deleteAllGame(Integer gameId) {
+	public void deleteAllGame(String gameId) {
 		this.listAll().stream().forEach(r->rollRepository.deleteById(r.getRollId()));
 	}
 
 	@Override
-	public Roll findByID(int id) {
+	public Roll findByID(String id) {
 		return rollRepository.findById(id);
 	}
 
 	public RollDTO convertToDTO(Roll roll) {
 		RollDTO rollDTO = new RollDTO();
-		rollDTO.setRollId(roll.getRollId());
+		rollDTO.setRollId(roll.getId());
 		rollDTO.setD1(roll.getD1());
 		rollDTO.setD2(roll.getD2());
 		rollDTO.setResult(roll.getD1()+roll.getD2());
-		rollDTO.setGame(roll.getGame());
 		return rollDTO;
 		
 	}

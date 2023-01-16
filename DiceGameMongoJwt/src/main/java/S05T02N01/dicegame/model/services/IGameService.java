@@ -8,5 +8,5 @@ public interface IGameService {
 	public List<Game> listAll();
 	public List<Game> listAllPlayer(String playerId);
 	public Game saveOne(Game game);
-	public Game findByID(int id);
+	public Game findByID(String id);
 }

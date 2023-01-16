@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class RollDTO {
-	private int rollId;
+	private String rollId;
 	private int d1;
 	private int d2;
 	private int result;

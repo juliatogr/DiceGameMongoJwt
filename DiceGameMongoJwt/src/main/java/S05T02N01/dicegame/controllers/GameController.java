@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class GameController {
 	private IGameService gameService;
 	
 	@Autowired
-	private IUserService playerService;
+	private IUserService userService;
 
 //	@GetMapping("/games")
 //	public String listGames(Model model) {
@@ -65,7 +66,7 @@ public class GameController {
 
 	@GetMapping("/games")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-	public ResponseEntity<List<Game>> listGames(Model model) {
+	public ResponseEntity<List<Game>> listGames() {
 		
 		try {
 			List<Game> games = new ArrayList<Game>();
@@ -80,7 +81,7 @@ public class GameController {
 	
 	@GetMapping("/players/{id}/games")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-	public ResponseEntity<List<Game>> listPlayerGames(@PathVariable("id") String id, Model model) {
+	public ResponseEntity<List<Game>> listPlayerGames(@PathVariable("id") String id) {
 		
 		try {
 			List<Game> games = new ArrayList<Game>();
@@ -98,9 +99,19 @@ public class GameController {
 	public ResponseEntity<Game> saveGame(@PathVariable("id") String id) {
 		
 		try {
-			Optional<User> p = playerService.findById(id);
+			Optional<User> p = userService.findById(id);
 			User player = p.isPresent()?p.get():null;
-			Game _game = gameService.saveOne(new Game(player));
+			Game g = new Game(player);
+			
+			Set<Game> games = new HashSet<>();
+			Game _game = gameService.saveOne(g);
+			
+//			games = userService.findById(id).get().getGames();
+//			games.add(g);
+//			
+//			player.setGames(games);
+//			
+//			userService.saveOne(player);
 			return new ResponseEntity<>(_game, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
