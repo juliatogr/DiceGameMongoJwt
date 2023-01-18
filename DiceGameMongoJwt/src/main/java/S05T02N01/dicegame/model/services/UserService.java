@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-
+import S05T02N01.dicegame.model.domain.Game;
 import S05T02N01.dicegame.security.models.User;
 import S05T02N01.dicegame.security.repository.UserRepository;
 

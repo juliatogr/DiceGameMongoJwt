@@ -1,6 +1,8 @@
 package S05T02N01.dicegame.security.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -35,9 +37,8 @@ public class User {
 
   @DBRef
   private Set<Role> roles = new HashSet<>();
-  
-  @DBRef
-  private Set<Game> games = new HashSet<>();
+
+  private List<Game> games = new ArrayList<>();
   
   public double avgSuccessPerc = 0.0;
 

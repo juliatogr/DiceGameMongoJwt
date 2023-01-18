@@ -19,12 +19,12 @@ NOTES
 
 Has de tindre en compte els  següents detalls de  construcció: 
 - URL's:
-  - POST: /players: crea un jugador/a. 
+  - POST: /api/auth/signup: crea un usuari/jugador. 
   - PUT /players: modifica el nom del jugador/a.
-  - POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.  
-  - DELETE /players/{id}/games: elimina les tirades del jugador/a.
-  - GET /players/: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.   
-  - GET /players/{id}/games: retorna el llistat de jugades per un jugador/a.  
+  - ?POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.  
+  - ?DELETE /players/{id}/games: elimina les tirades del jugador/a.
+  - GET /players: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.   
+  - GET /players/{id}/games: retorna el llistat de partides per un jugador/a.  
   - GET /players/ranking: retorna el ranking mig de tots els jugadors/es del sistema. És a dir, el  percentatge mitjà d’èxits. 
   - GET /players/ranking/loser: retorna el jugador/a  amb pitjor percentatge d’èxit.  
   - GET /players/ranking/winner: retorna el  jugador amb pitjor percentatge d’èxit. 
@@ -60,3 +60,6 @@ Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL'
 - **Spring Boot, MongoDB: JWT Authentication with Spring Security** https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/
 - **Thymeleaf + Spring Security integration basics** https://www.thymeleaf.org/doc/articles/springsecurity.html
 - **Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported for @RequestBody MultiValueMap** https://stackoverflow.com/questions/33796218/content-type-application-x-www-form-urlencodedcharset-utf-8-not-supported-for
+
+https://stackabuse.com/spring-data-mongodb-guide-to-the-query-annotation/
+https://docs.spring.io/spring-data/mongodb/docs/current-SNAPSHOT/reference/html/#reference

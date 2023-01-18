@@ -1,23 +1,12 @@
 package S05T02N01.dicegame.controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import S05T02N01.dicegame.model.domain.Game;
-import S05T02N01.dicegame.model.domain.Roll;
-import S05T02N01.dicegame.model.dto.RollDTO;
-import S05T02N01.dicegame.model.services.IGameService;
 import S05T02N01.dicegame.model.services.IUserService;
-import S05T02N01.dicegame.model.services.IRollService;
 import S05T02N01.dicegame.security.models.User;
 
 import org.springframework.ui.Model;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +67,7 @@ public class RankingController {
 //	}
 	
 	@GetMapping("/ranking")
-	public ResponseEntity<List<User>> getRanking() {
+	public ResponseEntity<Double> getRanking() {
 		try {
 			double avgSuccessPerc = 0;
 			List<User> players = playerService.listAll();
@@ -94,7 +83,7 @@ public class RankingController {
 //			List<Player> players = new ArrayList<Player>();
 //			
 //			playerService.listAll().forEach(players::add);
-			return new ResponseEntity<>(players, HttpStatus.OK);
+			return new ResponseEntity<>(avgSuccessPerc, HttpStatus.OK);
 		}  catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

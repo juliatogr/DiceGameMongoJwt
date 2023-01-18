@@ -10,30 +10,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-@Document(collection = "rolls")
 public class Roll {
 	
-	@Id private String id;
 	private int d1;
 	private int d2;
-    private Game game;
-	
-	public boolean isWin() {
-		return d1 + d2 == 7;
-	}
+	private int result;
 	
 	public Roll() {
 		Random random = new Random();
 		d1 = (int) (random.nextInt(6)+1);
 		d2 = (int) (random.nextInt(6)+1);
-	}
-	
-	public Roll(Game game) {
-		
-		Random random = new Random();
-		d1 = (int) (random.nextInt(6)+1);
-		d2 = (int) (random.nextInt(6)+1);
-		this.game = game;
-	}
-	
+		result = d1 + d2;
+	}	
 }
