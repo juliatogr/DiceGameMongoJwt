@@ -1,26 +1,18 @@
 package S05T02N01.dicegame.model.domain;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Random;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import S05T02N01.dicegame.security.models.User;
 import lombok.Data;
 
 @Data
 public class Game {
 
-	private List<Roll> rolls = new ArrayList<>();
+	private int d1;
+	private int d2;
 	
-	private double successPerc = 0.0;
-	
-	@JsonIgnore
-	private boolean isFinished = false;
+	public Game() {
+		Random random = new Random();
+		d1 = (int) (random.nextInt(6)+1);
+		d2 = (int) (random.nextInt(6)+1);
+	}	
 }

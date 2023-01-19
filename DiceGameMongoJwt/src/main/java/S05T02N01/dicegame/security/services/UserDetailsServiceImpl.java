@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import S05T02N01.dicegame.security.models.User;
-import S05T02N01.dicegame.security.repository.UserRepository;
+import S05T02N01.dicegame.model.domain.User;
+import S05T02N01.dicegame.model.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

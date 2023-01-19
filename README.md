@@ -20,8 +20,9 @@ NOTES
 Has de tindre en compte els  següents detalls de  construcció: 
 - URL's:
   - POST: /api/auth/signup: crea un usuari/jugador. 
+  - POST: /api/auth/signin: Inicia la sessió d'un usuari/jugador. 
   - PUT /players: modifica el nom del jugador/a.
-  - ?POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.  
+  - POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.  
   - ?DELETE /players/{id}/games: elimina les tirades del jugador/a.
   - GET /players: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.   
   - GET /players/{id}/games: retorna el llistat de partides per un jugador/a.  

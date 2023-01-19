@@ -1,5 +1,6 @@
 package S05T02N01.dicegame.security.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import S05T02N01.dicegame.security.models.User;
+import S05T02N01.dicegame.model.domain.User;
 
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
@@ -28,25 +29,25 @@ public class UserDetailsImpl implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(String id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+			GrantedAuthority authority) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(authority);
 		this.authorities = authorities;
 	}
 
 	public static UserDetailsImpl build(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList());
+		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
 
 		return new UserDetailsImpl(
 				user.getId(), 
 				user.getUsername(), 
 				user.getEmail(),
 				user.getPassword(), 
-				authorities);
+				authority);
 	}
 
 	@Override

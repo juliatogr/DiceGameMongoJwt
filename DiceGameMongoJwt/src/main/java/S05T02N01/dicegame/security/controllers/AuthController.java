@@ -8,33 +8,25 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import S05T02N01.dicegame.model.domain.User;
+import S05T02N01.dicegame.model.repository.UserRepository;
 import S05T02N01.dicegame.security.jwt.JwtUtils;
-import S05T02N01.dicegame.security.models.ERole;
-import S05T02N01.dicegame.security.models.Role;
-import S05T02N01.dicegame.security.models.User;
 import S05T02N01.dicegame.security.payload.request.LoginRequest;
 import S05T02N01.dicegame.security.payload.request.SignupRequest;
 import S05T02N01.dicegame.security.payload.response.JwtResponse;
 import S05T02N01.dicegame.security.payload.response.MessageResponse;
-import S05T02N01.dicegame.security.repository.RoleRepository;
-import S05T02N01.dicegame.security.repository.UserRepository;
 import S05T02N01.dicegame.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -46,9 +38,6 @@ public class AuthController {
 
 	@Autowired
 	UserRepository userRepository;
-
-	@Autowired
-	RoleRepository roleRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -96,37 +85,6 @@ public class AuthController {
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRoles = signUpRequest.getRoles();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
