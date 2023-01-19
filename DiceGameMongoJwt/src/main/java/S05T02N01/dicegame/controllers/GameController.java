@@ -21,14 +21,14 @@ import S05T02N01.dicegame.model.domain.Game;
 import S05T02N01.dicegame.model.domain.User;
 import S05T02N01.dicegame.model.dto.GameDTO;
 import S05T02N01.dicegame.model.dto.UserDTO;
-import S05T02N01.dicegame.model.services.IUserService;
+import S05T02N01.dicegame.model.services.UserService;
 
 
 @RestController
 public class GameController {
 	
 	@Autowired
-	private IUserService userService;
+	private UserService userService;
 	
 	@GetMapping("/players")
 	@PreAuthorize("hasRole('USER')")

@@ -13,46 +13,39 @@ import S05T02N01.dicegame.model.repository.UserRepository;
 
 
 @Service
-public class UserService implements IUserService {
+public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
 	
 	
-	@Override
 	public List<UserDTO> listAll() {
 		
 		return userRepository.findAll().stream().map(u->convertUserToDTO(u)).toList();
 	}
 	
-	@Override
 	public List<GameDTO> listAllGames(String id) {
 		
 		return userRepository.findById(id).get().getGames().stream().map(g->convertGameToDTO(g)).toList();
 	}
 
-	@Override
 	public User saveOne(User player) {
 		userRepository.save(player);
 		return player;
 	}
 	
-	@Override
 	public Optional<User> findById(String id) {
 		return userRepository.findById(id);
 	}
 	
-	@Override
 	public Optional<User> findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 
-	@Override
 	public GameDTO convertGameToDTO(Game g) {
 		return new GameDTO(g.getD1(), g.getD2());
 	}
 	
-	@Override
 	public UserDTO convertUserToDTO(User u) {
 		return new UserDTO(u.getUsername(), computeSuccessPerc(u), this.listAllGames(u.getId()));
 	}
