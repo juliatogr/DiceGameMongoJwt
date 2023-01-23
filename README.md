@@ -65,3 +65,5 @@ https://stackoverflow.com/questions/189559/how-do-i-join-two-lists-in-java
 https://stackoverflow.com/questions/8794016/spring-data-mongodb-for-class-inheritance
 
 https://docs.spring.io/spring-data/mongodb/docs/current-SNAPSHOT/reference/html/#reference
+https://mkyong.com/spring-boot/spring-boot-spring-security-thymeleaf-example/
+https://www.youtube.com/watch?v=pOMns4h5fQg
