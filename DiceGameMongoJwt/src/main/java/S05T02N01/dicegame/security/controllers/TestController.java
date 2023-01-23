@@ -20,4 +20,10 @@ public class TestController {
 	public String userAccess() {
 		return "User Content.";
 	}
+	
+	@GetMapping("/anonymous")
+	@PreAuthorize("hasRole('ANONYMOUS')")
+	public String anonymousAccess() {
+		return "Anonymous Content.";
+	}
 }

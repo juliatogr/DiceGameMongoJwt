@@ -4,7 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import S05T02N01.dicegame.model.domain.AnonymousUser;
 import S05T02N01.dicegame.model.domain.Game;
 import S05T02N01.dicegame.model.domain.RegisteredUser;
 import S05T02N01.dicegame.model.domain.User;
@@ -17,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	private User currentUser = null;
+	private AnonymousUser lastAnonymousUser = null;
 
 	public List<UserDTO> listAll() {
 
@@ -24,8 +32,9 @@ public class UserService {
 	}
 
 	public List<GameDTO> listAllGames(String id) {
-
-		return userRepository.findById(id).get().getGames().stream().map(g -> convertGameToDTO(g)).toList();
+		User u = userRepository.findById(id).get();
+		System.out.println(u);
+		return u.getGames().stream().map(g -> convertGameToDTO(g)).toList();
 	}
 
 	public User saveOne(User player) {
@@ -44,7 +53,9 @@ public class UserService {
 	}
 
 	public UserDTO convertUserToDTO(User u) {
-		return new UserDTO(u.getUsername(), computeSuccessPerc(u), this.listAllGames(u.getId()));
+		UserDTO user =  new UserDTO(u.getUsername(), computeSuccessPerc(u), this.listAllGames(u.getId()));
+		
+		return user;
 	}
 
 	public double computeSuccessPerc(User u) {
@@ -73,11 +84,10 @@ public class UserService {
 		return exists[0];
 	}
 
-	public Optional<User> findByUsername(String username) {
+	public Optional<RegisteredUser> findByUsername(String username) {
 
-		Optional<User> user = Optional.of(null);
-		userRepository.findByUsername(username);
-		return user;
+
+		return userRepository.findByUsername(username);
 	}
 
 	public boolean existsByEmail(String email) {
@@ -94,4 +104,34 @@ public class UserService {
 		return exists[0];
 	}
 
+	public void setlastAnonymousUser(AnonymousUser u) {
+		this.lastAnonymousUser = u;
+		this.currentUser = u;
+	}
+	
+	public User getCurrentUser() {
+		
+		List<User> users = userRepository.findAll();
+		
+		boolean found = false;
+		int i = users.size()-1;
+		while (i >= 0 && !found) {
+			if (users.get(i).getUsername().equals("ANONYMOUS")) {
+				this.currentUser = users.get(i);
+				found = true;
+			}
+			i--;
+		}
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			
+			System.out.println("is logged in");
+			Optional<RegisteredUser> _user = this.findByUsername(authentication.getName());
+			
+			this.currentUser = _user.isPresent()? _user.get() : null;
+		}
+		System.out.println("currentuser: " + currentUser.getId());
+		return this.currentUser;
+	}
 }

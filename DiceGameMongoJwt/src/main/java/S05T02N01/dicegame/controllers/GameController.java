@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +33,7 @@ public class GameController {
 	private UserService userService;
 
 	@GetMapping("/players")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<List<UserDTO>> listAll() {
 
 		try {
@@ -48,15 +52,22 @@ public class GameController {
 		RegisteredUser playerData = (RegisteredUser) userService.findById(player.getId());
 
 		if (playerData != null) {
-			RegisteredUser _player = playerData;
-			_player.setUsername(player.getUsername());
-			return new ResponseEntity<>((RegisteredUser) userService.saveOne(_player), HttpStatus.OK);
+			User currentUser = userService.getCurrentUser();
+			if (currentUser != null && playerData.getId() == currentUser.getId()) {
+				RegisteredUser _player = playerData;
+				_player.setUsername(player.getUsername());
+				return new ResponseEntity<>((RegisteredUser) userService.saveOne(_player), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+			
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@GetMapping("players/ranking")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<Double> getRanking() {
 		try {
 			double avgSuccessPerc = 0;
@@ -77,6 +88,7 @@ public class GameController {
 	}
 
 	@GetMapping("players/ranking/loser")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<UserDTO> getLoser() {
 		List<UserDTO> players = userService.listAll();
 
@@ -92,6 +104,7 @@ public class GameController {
 	}
 
 	@GetMapping("players/ranking/winner")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<UserDTO> getWinner(Model model) {
 
 		List<UserDTO> players = userService.listAll();
@@ -106,53 +119,104 @@ public class GameController {
 	}
 
 	@GetMapping("/players/{id}/games")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<List<GameDTO>> listPlayerGames(@PathVariable("id") String id) {
-
+		
 		try {
+			User player = userService.findById(id);
+			
+			if (player != null) {
 
-			return new ResponseEntity<>(userService.listAllGames(id), HttpStatus.OK);
+				User currentUser = userService.getCurrentUser();
+				System.out.println(currentUser.getId());
+				if(currentUser.getId().equals(id)) {
+					return new ResponseEntity<>(userService.listAllGames(id), HttpStatus.OK);
+					
+				} else {
+					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+				}
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PostMapping("/players/{id}/games")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<GameDTO> saveGame(@PathVariable("id") String id) {
 
 		try {
-			// Get player
 			User player = userService.findById(id);
+			
+			if (player != null) {
 
-			// init game
-			Game game = new Game();
+				User currentUser = userService.getCurrentUser();
+				if(currentUser.getId().equals(id)) {
+					Game game = new Game();
 
-			// Update games on user
-			List<Game> games = player.getGames();
-			games.add(game);
-			player.setGames(games);
-			userService.saveOne(player);
-			return new ResponseEntity<>(userService.convertGameToDTO(game), HttpStatus.CREATED);
+					// Update games on user
+					List<Game> games = player.getGames();
+					games.add(game);
+					player.setGames(games);
+					userService.saveOne(player);
+					return new ResponseEntity<>(userService.convertGameToDTO(game), HttpStatus.CREATED);
+					
+				} else {
+					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+				}
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@DeleteMapping("/players/{id}/games")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
 	public ResponseEntity<UserDTO> deleteGames(@PathVariable("id") String id) {
-
+		
 		try {
-			// Get player
 			User player = userService.findById(id);
+			
+			if (player != null) {
 
-			player.setGames(new ArrayList<Game>());
-			userService.saveOne(player);
-			return new ResponseEntity<>(userService.convertUserToDTO(player), HttpStatus.OK);
+				User currentUser = userService.getCurrentUser();
+				if(currentUser.getId().equals(id)) {
+					player.setGames(new ArrayList<Game>());
+					userService.saveOne(player);
+					return new ResponseEntity<>(userService.convertUserToDTO(player), HttpStatus.OK);
+					
+				} else {
+					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+				}
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
+	@GetMapping("/currentuser")
+	@PreAuthorize("hasRole('USER') or hasRole('ANONYMOUS')")
+	public ResponseEntity<UserDTO> getCurrentUser() {
+
+		try {
+			
+			UserDTO u = userService.convertUserToDTO(userService.getCurrentUser());
+			System.out.println(userService.getCurrentUser().getId());
+			return new ResponseEntity<>(u, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
