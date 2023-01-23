@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import S05T02N01.dicegame.model.domain.User;
-import S05T02N01.dicegame.model.repository.UserRepository;
+import S05T02N01.dicegame.model.domain.AnonymousUser;
+import S05T02N01.dicegame.model.domain.RegisteredUser;
+import S05T02N01.dicegame.model.services.UserService;
 import S05T02N01.dicegame.security.jwt.JwtUtils;
 import S05T02N01.dicegame.security.payload.request.LoginRequest;
 import S05T02N01.dicegame.security.payload.request.SignupRequest;
@@ -35,7 +36,7 @@ public class AuthController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -51,40 +52,38 @@ public class AuthController {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
+
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
-												 roles));
+		return ResponseEntity.ok(
+				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
+
+		if (signUpRequest.getUsername() == null) {
+			userService.saveOne(new AnonymousUser());
+		} else {
+
+			if (userService.existsByUsername(signUpRequest.getUsername())) {
+				return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			}
+
+			if (userService.existsByEmail(signUpRequest.getEmail())) {
+				return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+			}
+
+			// Create new user's account
+			RegisteredUser user = new RegisteredUser(signUpRequest.getUsername(), signUpRequest.getEmail(),
+					encoder.encode(signUpRequest.getPassword()));
+
+			userService.saveOne(user);
 		}
-
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
-		}
-
-		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), 
-							 signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()));
-
-		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+
 }
