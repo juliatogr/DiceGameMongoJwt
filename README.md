@@ -1,41 +1,72 @@
-# BE_Java_Sprint5_Task2
+# DiceGameMongoJwt
 
-Aquest és el teu projecte final, una API 100% dissenyada per tu on aplicaràs tot el que saps fins ara per a crear una aplicació al complet, des de la base de dades a la seguretat. Aplica tot el que saps fins i tot el que no es demana.
+## Introduction
 
-## Nivell 1
+The Dice Game is played with two dice. It is won when the sum of the two dice in a roll is equal to 7. Otherwise, the game is lost.
 
-El joc de daus s’hi juga amb dos daus. En cas que el resultat de la suma dels dos daus sigui 7, la partida és guanyada, si no és perduda. Un jugador/a pot  veure un llistat de totes les tirades que ha fet i el percentatge d’èxit.   
+To play and roll it is needed to sign up the user with a unique username and email. There exists the possibility to play as an anonymous user introducing no data when registering. In this case, there is no need to log in the user, they can play without any problem. 
 
-Per poder jugar al joc i realitzar una tirada, un usuari/ària  s’ha de registrar amb un nom no repetit. En crear-se, se li assigna un identificador numèric únic i una data de registre. Si l’usuari/ària així ho desitja, pots no afegir cap nom i es  dirà “ANÒNIM”. Pot haver-hi més d’un jugador “ANÒNIM”.  
-Cada jugador/a pot veure un llistat de totes les  tirades que ha fet, amb el valor de cada dau i si s’ha  guanyat o no la partida. A més, pot saber el seu percentatge d’èxit per totes les tirades  que ha fet.    
+These are the possible actions of the API
 
-No es pot eliminar una partida en concret, però sí que es pot eliminar tot el llistat de tirades per un jugador/a.  
+| Methods | URLs | Actions |
+| :---:   | :--- | :------ |
+| POST | /api/auth/signup| creates a user |
+| POST | /api/auth/signin | Inits the session of a registered user | 
+| PUT | /players | updates the username of a registered user |
+| POST | /players/{id}/games/ | the player with the specified id rolls |
+| DELETE | /players/{id}/games | deletes the rolls of the player with the specified id |
+| GET | /players | list all players with their average success percentage |
+| GET | /players/{id}/games | list all games of the player with the specified id |
+| GET | /players/ranking | returns the total average success percentage of all users in the system |
+| GET | /players/ranking/loser | returns the player with worst average success percentage | 
+| GET | /players/ranking/winner | returns the player with best average success percentage |
 
-El software ha de permetre llistar tots els jugadors/es que hi ha al sistema, el percentatge d’èxit de cada jugador/a i el  percentatge d’èxit mitjà de tots els jugadors/es en el sistema.   
+Obviously, any action depending on an id is not allowed to do by a user which id is different than the given one in the path.
 
-El software ha de respectar els principals patrons de  disseny.  
+## Security
 
-NOTES 
+To assure the program encodes the password of the user and keeps all their information secretly, the API uses an authentication and authorization request and response process with the JSON Web Token (JWT) and Spring Boot Security dependencies.
 
-Has de tindre en compte els  següents detalls de  construcció: 
-- URL's:
-  - POST: /api/auth/signup: crea un usuari/jugador. 
-  - POST: /api/auth/signin: Inicia la sessió d'un usuari/jugador. 
-  - PUT /players: modifica el nom del jugador/a.
-  - POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.  
-  - DELETE /players/{id}/games: elimina les tirades del jugador/a.
-  - GET /players: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.   
-  - GET /players/{id}/games: retorna el llistat de partides per un jugador/a.  
-  - GET /players/ranking: retorna el ranking mig de tots els jugadors/es del sistema. És a dir, el  percentatge mitjà d’èxits. 
-  - GET /players/ranking/loser: retorna el jugador/a  amb pitjor percentatge d’èxit.  
-  - GET /players/ranking/winner: retorna el  jugador amb pitjor percentatge d’èxit. 
+I followed the [Bezcoder Tutorial](https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/) to implement all the security.
 
-- Fase 1
-Persistència: utilitza com a base de dades MySQL. 
-- Fase 2
-Canvia tot el que necessitis i utilitza MongoDB per persistir les dades.
-- Fase 3
-Afegeix seguretat: inclou autenticació per JWT en  tots els accessos a les URL's del microservei. 
+### JWT  Authentication Flow
+
+As given in the [Bezcoder Tutorial](https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/), this is the authentication flow.
+
+![spring-boot-mongodb-jwt-authentication-flow](images/spring-boot-mongodb-jwt-authentication-flow.png)
+
+The process to sign up and sign in follos the next steps:
+
+1. Introduce the URL `localhost:9000/auth/signup` as a POST method with the corresponding user body (username, email, password).
+
+        -  Anonymous user:
+![anonymous-signup](images/anonymous-signup.png)
+
+        - Registered user:
+
+![reg-user-signup](images/reg-user-signup.png)
+
+The server checks the information introduced is correct and returns the Message "Registered successfully!") if everything is OK.
+        
+2. Introduce the URL `localhost:9000/auth/signin` as a POST method with the corresponding login body (username, password). (Do not apply this step if the user is anonymous)
+
+![reg-user-signin](images/reg-user-signin.png)
+
+The server generates the token and gives the corresponding authorities to the user. Then, it returns this info to the user.
+
+3. Copy the given token when login and paste it in the Authorization Header as a Bearer Token (Do not apply this step if the user is anonymous)
+
+![auth-header-token](images/auth-header-token.png)
+
+4. Do every action with the token introduced and the server checks everything is OK and return what is defined by the API if the user is allowed.
+
+![roll-example](images/roll-example.png)
+### Security Architecture
+
+The files of the project are organized as shown in the next figure.
+
+
+![spring-boot-mongodb-jwt-authentication-spring-security-architecture](images/spring-boot-mongodb-jwt-authentication-spring-security-architecture.png)
 
 ## Util links
 
