@@ -97,7 +97,62 @@ The general security architecture is the next.
 
 ![spring-boot-mongodb-jwt-authentication-spring-security-architecture](images/spring-boot-mongodb-jwt-authentication-spring-security-architecture.png)
 
+All the security is organised in the `security` folder like this.
 
+![security-folder](images/security-folder.PNG)
+
+* `WebSecurityConfig` configures cors, csrf, session management, rules for protected resources.
+
+  * @EnableWebSecurity allows Spring to find and automatically apply the class to the global Web Security.
+        
+  * @EnableGlobalMethodSecurity provides AOP security on methods. It enables @PreAuthorize, @PostAuthorize. We can secure methods in our APIs with @PreAuthorize annotation easily.
+        
+  * `securityFilterChain(HttpSecurity http)` tells Spring Security how we configure CORS and CSRF, when we want to require all users to be authenticated or not, which filter (AuthTokenFilter) and when we want it to work (filter before UsernamePasswordAuthenticationFilter), which Exception Handler is chosen (AuthEntryPointJwt).
+
+* `AuthenticationManager` has a DaoAuthenticationProvider (with help of UserDetailsService & PasswordEncoder) to validate UsernamePasswordAuthenticationToken object. If successful, AuthenticationManager returns a fully populated Authentication object (including granted authorities).
+
+* `AuthEntryPointJwt` implements AuthenticationEntryPoint. AuthenticationEntryPoint will catch authentication error. commence() will be triggerd anytime unauthenticated User requests a secured HTTP resource and an AuthenticationException is thrown. HttpServletResponse.SC_UNAUTHORIZED is the 401 Status code. It indicates that the request requires HTTP authentication.
+
+* `OncePerRequestFilter` makes a single execution for each request to our API. It provides a doFilterInternal() method that we will implement parsing & validating JWT, loading User details (using UserDetailsService), checking Authorizaion (using UsernamePasswordAuthenticationToken).
+
+* `AuthTokenFilter`  extends OncePerRequestFilter. Therefore, it is executed once per request. It overrides `doFilterInternal()` to get JWT from the Authorization header, validate it, get UserDetails, generate an Authentication Object with `UsernamePasswordAuthenticationToken` and set the current UserDetails in SecurityContext.
+
+* `JwtUtils` provides methods for generating, parsing, validating JWT. This class has 3 funtions:
+
+        - generate a JWT from username, date, expiration, secret
+        - get username from JWT
+        - validate a JWT
+
+* `LoginRequest` and `SignupRequest` are used to assure all needed fields when login or signing up are filled correctly.
+
+- `JwtResponse` and `MessageResponse` are used to send HTTP responses with personalized body.
+
+- `UserDetailsImpl` implements UserDetails. UserDetails contains necessary information (such as: username, password, authorities) to build an Authentication object.
+
+- `UserDetailsServiceImpl` implements UserDetailsService. Spring Security will load User details to perform authentication & authorization. So it has UserDetailsService interface that we need to implement. It will be used for getting UserDetails object. UserDetailsService interface has a method to load User by username and returns a UserDetails object that Spring Security can use for authentication and validation.
+
+Controller receives and handles request after it was filtered by OncePerRequestFilter.
+
+- `AuthController` provides APIs for register and login actions.
+
+        - /auth/signup
+
+                - check existing username/email
+                - create new User (with ROLE_USER if not specifying role)
+                - save User to database using UserRepository
+
+        - /auth/signin
+
+                - authenticate { username, pasword }
+                - update SecurityContext using Authentication object
+                - generate JWT
+                - get UserDetails from Authentication object
+                - response contains JWT and UserDetails data
+
+- `TestController` has accessing protected resource methods with role based validations. There are 3 APIs:
+  - /api/test/all for public access
+  - /api/test/user for users has ROLE_USER
+  - /api/test/anonymous for users has ROLE_ANONYMOUS
 
 ## Util links
 
