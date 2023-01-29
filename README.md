@@ -44,32 +44,32 @@ The process to sign up and sign in follos the next steps:
 1. Introduce the URL `localhost:9000/auth/signup` as a POST method with the corresponding user body (username, email, password).
 
         -  Anonymous user:
-![anonymous-signup](images/anonymous-signup.png)
+![anonymous-signup](images/anonymous-signup.PNG)
 
         - Registered user:
 
-![reg-user-signup](images/reg-user-signup.png)
+![reg-user-signup](images/reg-user-signup.PNG)
 
 The server checks the information introduced is correct and returns the Message "Registered successfully!") if everything is OK.
         
 2. Introduce the URL `localhost:9000/auth/signin` as a POST method with the corresponding login body (username, password). (Do not apply this step if the user is anonymous)
 
-![reg-user-signin](images/reg-user-signin.png)
+![reg-user-signin](images/reg-user-signin.PNG)
 
 The server generates the token and gives the corresponding authorities to the user. Then, it returns this info to the user.
 
 3. Copy the given token when login and paste it in the Authorization Header as a Bearer Token (Do not apply this step if the user is anonymous)
 
-![auth-header-token](images/auth-header-token.png)
+![auth-header-token](images/auth-header-token.PNG)
 
 4. Do every action with the token introduced and the server checks everything is OK and return what is defined by the API if the user is allowed.
 
-![roll-example](images/roll-example.png)
+![roll-example](images/roll-example.PNG)
 ### Project Organisation
 
 The mongo model is very simple.
 
-![model](images/model.png)
+![model](images/model.PNG)
 
 The fields `email`, `password` and `regDate` can be `null` because the anonymous user do not save this information.
 
@@ -77,7 +77,7 @@ There is no need to save the average success percentages since they are computed
 
 The files of the project are organised as shown in the next figure.
 
-![project-organisation](images/project-organisation.png)
+![project-organisation](images/project-organisation.PNG)
 
 - To distinguish between the registered user and the anonymous user, there is an inheritance from the class User, which is the type of entity saved on the Mongo Repository.
 
