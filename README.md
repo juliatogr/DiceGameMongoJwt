@@ -107,6 +107,8 @@ We make use of @EnableWebSecurity and  @EnableGlobalMethodSecurity annotations t
 
 When the user makes a request, it goes through the `AuthTokenFilter`, which extends OncePerRequestFilter. Therefore, the filter is executed once per request. It overrides `doFilterInternal()` to get JWT from the Authorization header, validate it, load `UserDetailsImpl` through `UserDetailsServiceImpl`, generate an Authentication Object with `UsernamePasswordAuthenticationToken` and set the current UserDetails in SecurityContext.
 
+test 
+
 If there is an authentication error, `AuthEntryPointJwt` takes action and throws AuthenticationException. The response will be HttpServletResponse.SC_UNAUTHORIZED.
 
 When everything has been checked by the filter, `AuthController` and `TestController` receive and handle the request. `AuthController` provides APIs for register and login actions and `TestController` has accessing protected resource methods with role based validations.
