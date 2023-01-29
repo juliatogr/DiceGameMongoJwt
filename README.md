@@ -43,10 +43,11 @@ The process to sign up and sign in follos the next steps:
 
 1. Introduce the URL `localhost:9000/auth/signup` as a POST method with the corresponding user body (username, email, password).
 
-        -  Anonymous user:
+  -  Anonymous user:
+
 ![anonymous-signup](images/anonymous-signup.PNG)
 
-        - Registered user:
+  - Registered user:
 
 ![reg-user-signup](images/reg-user-signup.PNG)
 
