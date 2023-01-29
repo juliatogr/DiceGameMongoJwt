@@ -101,52 +101,21 @@ All the security is organised in the `security` folder like this.
 
 ![security-folder](images/security-folder.PNG)
 
-* `WebSecurityConfig` is the most important part for the security implementation because it defines the configuration for managing user sessions. 
-
-  `filterChain(HttpSecurity http)` defines when to require authentication, the filter to use, when we want it to work, and which Exception Handler is chosen. 
+Everything is configured by `WebSecurityConfig`. It defines the configuration for managing user sessions implementing `filterChain(HttpSecurity http)`. This method defines when to require authentication, the filter to use, when we want it to work, and which Exception Handler is chosen. 
   
-  @EnableWebSecurity allows Spring to find and automatically apply the class to the global Web Security.
-        
-  @EnableGlobalMethodSecurity provides AOP security on methods. It enables @PreAuthorize, @PostAuthorize. We can secure methods in our APIs with @PreAuthorize annotation easily.
+We make use of @EnableWebSecurity and  @EnableGlobalMethodSecurity annotations to allow Spring to  apply the class to the global Web Security and enable @PreAuthorize to secure methods in the API.
 
-* `AuthTokenFilter`  extends OncePerRequestFilter. Therefore, it is executed once per request. It overrides `doFilterInternal()` to get JWT from the Authorization header, validate it, load UserDetails through UserDetailsService, generate an Authentication Object with `UsernamePasswordAuthenticationToken` and set the current UserDetails in SecurityContext. It is the first step every time there is a request.
+When the user makes a request, it goes through the `AuthTokenFilter`, which extends OncePerRequestFilter. Therefore, the filter is executed once per request. It overrides `doFilterInternal()` to get JWT from the Authorization header, validate it, load `UserDetailsImpl` through `UserDetailsServiceImpl`, generate an Authentication Object with `UsernamePasswordAuthenticationToken` and set the current UserDetails in SecurityContext.
 
-Controller receives and handles request after it was filtered by OncePerRequestFilter.
+If there is an authentication error, `AuthEntryPointJwt` takes action and throws AuthenticationException. The response will be HttpServletResponse.SC_UNAUTHORIZED.
 
-- `AuthController` provides APIs for register and login actions.
+When everything has been checked by the filter, `AuthController` and `TestController` receive and handle the request. `AuthController` provides APIs for register and login actions and `TestController` has accessing protected resource methods with role based validations.
 
-  - /auth/signup
+When login a user (`/auth/signin`), the `AuthController` makes use of the `AuthenticationManager` to validate UsernamePasswordAuthenticationToken and update SecurityContext using the returned object. It generates JWT and responses with it and UserDetails data
 
-    - check existing username/email if included in the body
-    - create new User (Registered or anonymous depending on the body data)
-    - save User to database using UserService
+All authentication requests are managed by `LoginRequest` and `SignupRequest`, which assure all needed fields when login or signing up are filled correctly. There are also `JwtResponse` and `MessageResponse` classes to send HTTP responses with personalized body.
 
-  - /auth/signin
-
-    - authenticate { username, pasword }
-    - update SecurityContext using Authentication object
-    - generate JWT
-    - get UserDetails from Authentication object
-    - response contains JWT and UserDetails data
-
-- `TestController` has accessing protected resource methods with role based validations. There are 3 APIs:
-  - /api/test/all for public access
-  - /api/test/user for users has ROLE_USER
-  - /api/test/anonymous for users has ROLE_ANONYMOUS
-
-* `AuthenticationManager` validates UsernamePasswordAuthenticationToken object and returns it if successful.
-
-* `AuthEntryPointJwt` implements AuthenticationEntryPoint to catch authentication error. commence() will be triggered anytime unauthenticated User requests a secured HTTP resource and an AuthenticationException is thrown. HttpServletResponse.SC_UNAUTHORIZED is the 401 Status code. It indicates that the request requires HTTP authentication.
-
-* `JwtUtils` provides methods for generating, parsing, validating JWT. 
-
-* `LoginRequest` and `SignupRequest` are used to assure all needed fields when login or signing up are filled correctly.
-
-- `JwtResponse` and `MessageResponse` are used to send HTTP responses with personalized body.
-
-- `UserDetailsImpl` implements UserDetails, which contains necessary information to build an Authentication object.
-
-- `UserDetailsServiceImpl` implements UserDetailsService, needed to load User details to perform authentication & authorization.
+Everything can be done defining methods for generating, parsing, validating JWT on `JwtUtils`.
 
 ## Util links
 
