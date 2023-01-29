@@ -13,6 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import S05T02N01.dicegame.model.domain.RegisteredUser;
 
+/* 
+ * This class is just to manage user with the unique fields needed for authentication
+ */
+
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 

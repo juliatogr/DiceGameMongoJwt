@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import S05T02N01.dicegame.model.domain.RegisteredUser;
 import S05T02N01.dicegame.model.repository.UserRepository;
 
+/*
+ * It allows loading User Details
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired

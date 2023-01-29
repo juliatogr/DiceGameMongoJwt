@@ -19,6 +19,9 @@ import S05T02N01.dicegame.security.jwt.AuthEntryPointJwt;
 import S05T02N01.dicegame.security.jwt.AuthTokenFilter;
 import S05T02N01.dicegame.security.services.UserDetailsServiceImpl;
 
+/*
+ * WebSecurityConfig configures cors, csrf, session management and rules for protected resources
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -54,6 +57,13 @@ public class WebSecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
+	/*
+	 * filterChain tells Spring Security how we configure CORS and CSRF, 
+	 * when we want to require all users to be authenticated or not, 
+	 * which filter (AuthTokenFilter) and when we want it to work 
+	 * (filter before UsernamePasswordAuthenticationFilter), 
+	 * and which Exception Handler is chosen (AuthEntryPointJwt).
+	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

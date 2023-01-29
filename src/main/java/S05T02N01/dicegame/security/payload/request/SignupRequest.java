@@ -4,7 +4,10 @@ package S05T02N01.dicegame.security.payload.request;
 import javax.validation.constraints.*;
 
 import lombok.Data;
- 
+
+/*
+ * Class created to validate sign up requests fields
+ */
 @Data
 public class SignupRequest {
 

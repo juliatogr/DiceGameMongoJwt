@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import S05T02N01.dicegame.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 
+/*
+ * JwtUtils has all util methods for generating and validating Jwt.
+ */
 @Component
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);

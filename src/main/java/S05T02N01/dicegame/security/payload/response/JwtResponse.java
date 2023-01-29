@@ -2,6 +2,9 @@ package S05T02N01.dicegame.security.payload.response;
 
 import java.util.List;
 
+/*
+ * Class to manage HTTP response body including Jwt data
+ */
 public class JwtResponse {
 	private String token;
 	private String type = "Bearer";

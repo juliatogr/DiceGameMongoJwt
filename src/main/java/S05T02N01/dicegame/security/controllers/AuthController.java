@@ -30,6 +30,9 @@ import S05T02N01.dicegame.security.payload.response.JwtResponse;
 import S05T02N01.dicegame.security.payload.response.MessageResponse;
 import S05T02N01.dicegame.security.services.UserDetailsImpl;
 
+/*
+ * Basic controller for the actions of signing up and signing in.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
@@ -46,6 +49,9 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
+	/*
+	 * Authenticates a user and sets the authentication to the Security Context.
+	 */
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -63,6 +69,9 @@ public class AuthController {
 				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
 
+	/*
+	 * Creates a registered or anonymous user depending on if there is a username introduced.
+	 */
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 

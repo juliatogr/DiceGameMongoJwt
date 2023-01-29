@@ -2,6 +2,9 @@ package S05T02N01.dicegame.security.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
+/*
+ * Class created to validate login requests fields
+ */
 public class LoginRequest {
 	
 	@NotBlank

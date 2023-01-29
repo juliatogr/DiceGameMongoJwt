@@ -20,6 +20,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import S05T02N01.dicegame.model.services.UserService;
 import S05T02N01.dicegame.security.services.UserDetailsServiceImpl;
 
+/*
+ * This class is executed once per request, before calling the controller.
+ * It is the first step when requesting. It is the filter which validates 
+ * the authorization token is correct and there is a signed in user.
+ */
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils;
